@@ -1,54 +1,46 @@
-'use client';
-
+"use client";
+import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 export default function LoginPage() {
-  const router = useRouter();
   const [phone, setPhone] = useState("+254700000001");
   const [name, setName] = useState("Amina Hassan");
+  const router = useRouter();
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    localStorage.setItem("memberPhone", phone);
-    localStorage.setItem("memberName", name);
+  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const res = await fetch("http://localhost:8000/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ phone, name }),
+    });
+    const data = await res.json();
+    localStorage.setItem("sacco_user", JSON.stringify(data));
     router.push("/dashboard");
-  }
+  };
 
   return (
-    <div className="min-h-screen bg-slate-100 py-16">
-      <div className="container mx-auto px-6">
-        <div className="mx-auto max-w-2xl rounded-3xl border border-slate-200 bg-white p-10 shadow-xl shadow-slate-900/5">
-          <h1 className="text-4xl font-bold text-slate-900">Member Login</h1>
-          <p className="mt-3 text-slate-600">
-            Use the seeded trial account, then click the button to preview your personal dashboard.
-          </p>
-          <form onSubmit={handleSubmit} className="mt-10 space-y-6">
-            <label className="block space-y-2 text-sm font-medium text-slate-700">
-              Full name
-              <input
-                value={name}
-                onChange={(event) => setName(event.target.value)}
-                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 shadow-sm focus:border-brand-green focus:outline-none focus:ring-2 focus:ring-brand-green/30"
-              />
-            </label>
-            <label className="block space-y-2 text-sm font-medium text-slate-700">
-              Phone number
-              <input
-                value={phone}
-                onChange={(event) => setPhone(event.target.value)}
-                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 shadow-sm focus:border-brand-green focus:outline-none focus:ring-2 focus:ring-brand-green/30"
-              />
-            </label>
-            <button
-              type="submit"
-              className="inline-flex w-full justify-center rounded-2xl bg-brand-green px-6 py-4 text-base font-semibold text-white shadow hover:bg-emerald-700"
-            >
-              Receive OTP & Login
-            </button>
-          </form>
+    <div className="max-w-md mx-auto mt-20 p-8 bg-white rounded-xl shadow-lg">
+      <h2 className="text-2xl font-bold text-primary mb-6 text-center">Member Login</h2>
+      <form onSubmit={handleLogin} className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+          <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary outline-none" required />
         </div>
-      </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary outline-none" required />
+        </div>
+        <button type="submit" className="w-full bg-primary text-white py-3 rounded-lg font-bold hover:bg-green-800 transition">
+          Receive OTP & Login
+        </button>
+        <p className="text-xs text-center text-gray-500 mt-4">
+          Demo: Use +254700000001 for Member, +254711111111 for Admin
+        </p>
+        <p className="text-xs text-center text-accent font-semibold mt-2">
+          Kill Switch: Dial *700# to halt all AI messages
+        </p>
+      </form>
     </div>
   );
 }

@@ -1,31 +1,39 @@
 import Link from "next/link";
 
-export default function HomePage() {
+export default function Home() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-brand-green/90 via-slate-800 to-slate-950 text-white">
-      <div className="container mx-auto px-6 py-20">
-        <div className="rounded-3xl border border-white/10 bg-white/10 p-10 shadow-2xl shadow-slate-950/20 backdrop-blur-xl">
-          <div className="max-w-3xl">
-            <p className="mb-4 inline-flex rounded-full bg-white/10 px-4 py-1 text-sm font-semibold uppercase tracking-[0.24em] text-slate-200">
-              Community SACCO
-            </p>
-            <h1 className="mt-6 text-5xl font-black tracking-tight text-white sm:text-6xl">
-              Build local savings and loans with trust, fairness, and speed.
-            </h1>
-            <p className="mt-6 text-xl leading-8 text-slate-200">
-              Preview the member dashboard, loan application flow, and compliance reporting all in one ethical fintech demo.
-            </p>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Link href="/login" className="inline-flex items-center justify-center rounded-full bg-brand-gold px-8 py-4 text-base font-semibold text-slate-950 shadow-lg shadow-brand-green/20 transition hover:bg-yellow-300">
-                Join Community SACCO
-              </Link>
-              <Link href="/admin" className="inline-flex items-center justify-center rounded-full border border-white/20 px-8 py-4 text-base font-semibold text-white transition hover:bg-white/10">
-                View Admin Dashboard
-              </Link>
-            </div>
-          </div>
+    <main className="max-w-6xl mx-auto p-6">
+      {/* Hero */}
+      <section className="text-center py-16 bg-white rounded-2xl shadow-sm border border-gray-100 mb-12">
+        <h1 className="text-4xl md:text-5xl font-bold text-primary mb-4">
+          Fair Loans. Human Dignity. Financial Growth.
+        </h1>
+        <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+          Empowering women livestock traders and market vendors in Wajir County through ethical, transparent, and human-centered financial services.
+        </p>
+        <div className="flex justify-center gap-4">
+          <Link href="/login" className="bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-800 transition">
+            Join Community SACCO
+          </Link>
+          <Link href="/admin" className="border-2 border-primary text-primary px-8 py-3 rounded-lg font-semibold hover:bg-green-50 transition">
+            Admin Portal
+          </Link>
         </div>
-      </div>
+      </section>
+
+      {/* Features */}
+      <section className="grid md:grid-cols-3 gap-6 mb-12">
+        {[
+          { title: "Ethical AI (TRACK)", desc: "Zero bias based on gender, clan, or marital status." },
+          { title: "Human-in-the-Loop", desc: "All final decisions reviewed by local loan officers." },
+          { title: "USSD Fallback", desc: "Dial *123# anytime. No smartphone required." }
+        ].map((f, i) => (
+          <div key={i} className="bg-white p-6 rounded-xl shadow-sm border-t-4 border-accent">
+            <h3 className="font-bold text-lg mb-2">{f.title}</h3>
+            <p className="text-gray-600">{f.desc}</p>
+          </div>
+        ))}
+      </section>
     </main>
   );
 }
