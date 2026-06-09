@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { API_BASE_URL } from "../../lib/api";
 
 interface AuditLog {
   framework: string;
@@ -18,7 +19,7 @@ export default function AdminDashboard() {
   const [metrics, setMetrics] = useState<AdminMetrics | null>(null);
 
   useEffect(() => {
-    fetch("http://localhost:8000/admin/metrics")
+    fetch(`${API_BASE_URL}/admin/metrics`)
       .then(res => res.json())
       .then(setMetrics);
   }, []);

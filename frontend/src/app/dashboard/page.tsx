@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { API_BASE_URL } from "../../lib/api";
 
 interface User {
   user_id: number;
@@ -28,7 +29,7 @@ export default function Dashboard() {
     if (!stored) return router.push("/login");
     const userData = JSON.parse(stored);
     setUser(userData);
-    fetch(`http://localhost:8000/loans/${userData.user_id}`)
+    fetch(`${API_BASE_URL}/loans/${userData.user_id}`)
       .then(res => res.json())
       .then(setLoans);
   }, [router]);
@@ -36,7 +37,7 @@ export default function Dashboard() {
   const applyLoan = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!user) return;
-    const res = await fetch("http://localhost:8000/loans/apply", {
+    const res = await fetch(`${API_BASE_URL}/loans/apply`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ user_id: user.user_id, amount: parseFloat(amount), purpose }),
