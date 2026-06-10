@@ -17,6 +17,20 @@ body {
   color: #111827;
 }
 
+.marquee {
+  display: inline-block;
+  animation: marquee 14s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 button, input, select, textarea {
   font: inherit;
 }

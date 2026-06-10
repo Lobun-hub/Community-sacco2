@@ -1,4 +1,4 @@
-from sqlalchemy import Column, DateTime, Float, Integer, String
+from sqlalchemy import Boolean, Column, DateTime, Float, Integer, String
 from sqlalchemy.sql import func
 
 from database import Base
@@ -11,7 +11,9 @@ class User(Base):
     phone = Column(String, unique=True, index=True)
     name = Column(String)
     role = Column(String, default="member")
+    business_type = Column(String, nullable=True)
     savings_balance = Column(Float, default=0.0)
+    is_active = Column(Boolean, default=True)
 
 
 class Loan(Base):
@@ -39,3 +41,18 @@ class AuditLog(Base):
         DateTime(timezone=True),
         server_default=func.now(),
     )
+
+
+class Notification(Base):
+    __tablename__ = "notifications"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String)
+    message = Column(String)
+    recipient_id = Column(Integer, index=True, nullable=True)
+    is_read = Column(Boolean, default=False)
+    created_at = Column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+    )
+    read_at = Column(DateTime(timezone=True), nullable=True)
