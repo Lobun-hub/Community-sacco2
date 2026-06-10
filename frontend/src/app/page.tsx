@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -24,11 +25,13 @@ export default function Home() {
         </div>
 
         <div className="overflow-hidden rounded-[32px] bg-slate-100 shadow-xl">
-          <img
+          <Image
             src="/wajir.png"
             alt="Wajir woman entrepreneur at market"
+            width={1600}
+            height={900}
             className="w-full h-96 object-cover"
-            loading="lazy"
+            unoptimized
           />
           <div className="p-5 bg-white border-t border-gray-100">
             <p className="text-sm text-gray-500">Supporting financial resilience for women-led businesses in rural Kenya.</p>

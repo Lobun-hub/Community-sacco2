@@ -343,6 +343,11 @@ def get_admin_audit_log(db: Session = Depends(get_db)):
     ]
 
 
+    @app.get("/")
+    def root():
+        return {"message": "Community SACCO backend is running"}
+
+
 # In-memory listeners for Server-Sent Events (SSE). Keyed by user_id.
 listeners: dict[int, list[asyncio.Queue]] = {}
 

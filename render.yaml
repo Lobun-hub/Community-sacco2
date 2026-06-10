@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: community-sacco-backend
+    env: python
+    plan: free
+    branch: main
+    root: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -w 4 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:$PORT main:app
+
+  - type: static
+    name: community-sacco-frontend
+    env: node
+    plan: free
+    branch: main
+    root: frontend
+    buildCommand: npm install && npm run build && npm run export
+    publishPath: out
+    envVars:
+      - key: NEXT_PUBLIC_API_BASE_URL
+        value: https://community-sacco-backend.onrender.com
