@@ -1,9 +1,17 @@
 "use client";
-import { useState, type FormEvent } from "react";
+import { Suspense, useState, type FormEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { API_BASE_URL } from "../../lib/api";
 
 export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="max-w-md mx-auto mt-20 p-8 bg-white rounded-xl shadow-lg">Loading login...</div>}>
+      <LoginClient />
+    </Suspense>
+  );
+}
+
+function LoginClient() {
   const [phone, setPhone] = useState("+254700000001");
   const [name, setName] = useState("Amina Hassan");
   const router = useRouter();
